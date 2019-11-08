@@ -6,11 +6,11 @@
 odoo.define('mail_to.MailTo', function (require) {
     "use strict";
 
-var chat_manager = require('mail_base.base').chat_manager;
+    var MailManager = require("mail.Manager");
+    MailManager.include({
+        _makeMessage: function(data) {
+            var msg = this._super(data);
 
-var make_message_super = chat_manager.make_message;
-chat_manager.make_message = function (data) {
-            var msg = make_message_super.call(this, data);
             msg.partner_ids = data.partner_ids;
             msg.channel_names = data.channel_names;
             msg.recipients = data.partner_ids.concat(data.channel_names);
@@ -34,7 +34,8 @@ chat_manager.make_message = function (data) {
 
             msg.more_recipients = more_recipients;
             return msg;
-        };
+        }
+    });
 
-    return chat_manager;
+    return MailManager;
 });

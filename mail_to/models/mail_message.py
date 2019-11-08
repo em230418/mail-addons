@@ -6,6 +6,18 @@ from odoo import models, api
 class MailMessage(models.Model):
     _inherit = 'mail.message'
 
+    # взято с mail_base
+    @api.multi
+    def write(self, values):
+        if values.get('needaction_partner_ids'):
+            if not values.get('partner_ids'):
+                values['partner_ids'] = []
+            for triplet in values.get('needaction_partner_ids'):
+                if triplet[0] == 6:
+                    for i in triplet[2]:
+                        values['partner_ids'].append((4, i, False))
+        return super(MailMessage, self).write(values)
+
     @api.multi
     def message_format(self):
         messages_values = super(MailMessage, self).message_format()

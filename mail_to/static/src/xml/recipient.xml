@@ -5,7 +5,7 @@
     License LGPL-3.0 (https://www.gnu.org/licenses/lgpl.html).-->
 <template>
     <t t-extend="mail.widget.Thread.Message">
-        <t t-jquery="p[class=o_mail_info] span:last" t-operation="after">
+        <t t-jquery="p.o_mail_info span:last" t-operation="after">
             <span class="recipients_info"><t t-if="message.partner_ids">
                 <t t-if="message.partner_ids.length > 0">To: </t>
                 <t t-else="message.channel_ids.length > 0">To: </t>
@@ -15,9 +15,9 @@
                             <i t-esc="message.partner_ids[i][1]"/><t t-if="i &lt; message.partner_ids.length - 1">; </t><t t-else="message.channel_ids.length > 0 and message.partner_ids.length &lt; 4">; </t>
                         </a>
                     </t>
-                    <t t-if="partner_ids.length &gt; 4">
+                    <t t-if="message.partner_ids.length &gt; 4">
                         <span t-att-title="more_recipients">
-                            and <t t-esc="partner_ids.length - 4"/> more
+                            and <t t-esc="message.partner_ids.length - 4"/> more
                         </span>
                     </t>
 
